@@ -3,12 +3,17 @@ using namespace std;
 
 int main()
 {
+    printf("\n"
+           "Polinomio 😾\n"
+           "\n");
     int grado;
     cout << "Ingresa el grado del polinomio: ";
     cin >> grado;
 
     int *coeficientes = new int[grado + 1];
-    cout << "Ingresa los coeficientes del polinomio: ";
+    // cout << "Ingresa los coeficientes del polinomio ( %4d ): ", grado;
+    printf("Ingresa los coeficientes del polinomio de menor a mayor (%d, contando ceros)", grado + 1);
+
     for (int i = 0; i <= grado; i++)
     {
         cin >> coeficientes[i];
@@ -18,7 +23,7 @@ int main()
     for (int i = grado; i >= 0; i--)
     {
         if (coeficientes[i] == 0)
-            continue; // Skip if coefficient is 0
+            continue; // Salta los coeficientes iguales a 0
         if (i == grado)
         {
             cout << coeficientes[i] << "x^" << i;

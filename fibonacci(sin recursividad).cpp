@@ -3,6 +3,9 @@ using namespace std;
 
 int main()
 {
+    printf("\n"
+           "Fibonacci (no recursivo) 😾\n"
+           "\n");
     int posicion, anterior1 = 0, anterior2 = 1, nuevo;
     cout << "Ingresa la posicion hasta la cual deseas imprimir la serie de Fibonacci: ";
     cin >> posicion;

@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-#define MAXNUM 10 // Define el máximo de discos
-#define START 0   // Inicio de la matriz (0)
-#define FINISH 2  //
+#define numMax 10 // Define el máximo de discos
+#define inicio 0  // Inicio de la matriz (0)
+#define final 2   //
 
-int isSolved(int arr[], int n)
+int solucion(int arr[], int n)
 {
     for (int i = 0; i < n; ++i)
     {
-        if (arr[i] != FINISH)
+        if (arr[i] != final)
         {
             return 0;
         }
@@ -17,14 +17,14 @@ int isSolved(int arr[], int n)
     return 1;
 }
 
-void swap(int *px, int *py)
+void intercambio(int *px, int *py)
 {
     int temp = *px;
     *px = *py;
     *py = temp;
 }
 
-int isOdd(int x)
+int imp(int x)
 {
     return ((x % 2) == 1);
 }
@@ -32,46 +32,46 @@ int isOdd(int x)
 int main(void)
 {
     printf("\n"
-           "Torre de Hanoi （；´д｀）ゞ\n"
+           "Torre de Hanoi (no recursivo) 😾\n"
            "\n");
-    int numberOfDisks;
+    int cantDiscos;
     do
     {
-        printf("Número de discos (1 a %d): ", MAXNUM);
-        scanf("%d", &numberOfDisks);
-    } while ((numberOfDisks < 1) || (numberOfDisks > MAXNUM)); // Recordemos que MAXNUM es ell máximo de discos
+        printf("Número de discos (1 a %d): ", numMax);
+        scanf("%d", &cantDiscos);
+    } while ((cantDiscos < 1) || (cantDiscos > numMax)); // Recordemos que numMax es el máximo de discos
 
-    int rod[numberOfDisks];
-    for (int i = 0; i < numberOfDisks; ++i)
+    int varilla[cantDiscos];
+    for (int i = 0; i < cantDiscos; ++i)
     {
-        rod[i] = START;
+        varilla[i] = inicio;
     }
-    int smallestDir = (isOdd(numberOfDisks)) ? -1 : 1;
-    int alternateRodTable[3][2] = {{1, 2}, {0, 2}, {0, 1}};
+    int discoPeque = (imp(cantDiscos)) ? -1 : 1;
+    int tabVarillasAlt[3][2] = {{1, 2}, {0, 2}, {0, 1}}; // Editar esto
 
     printf("\n"
            "Solución:\n"
            "\n");
 
-    int moveCount = 0;
+    int contMovimientos = 0;
     do
     {
-        ++moveCount;
+        ++contMovimientos;
 
-        int disk, rodFrom, rodTo;
-        if (isOdd(moveCount))
+        int disco, origen, destino;
+        if (imp(contMovimientos))
         {
             // movimiento del disco más pequeño
-            disk = 0;
-            rodFrom = rod[disk];
-            rodTo = rodFrom + smallestDir;
-            if (rodTo < START)
+            disco = 0;
+            origen = varilla[disco];
+            destino = origen + discoPeque;
+            if (destino < inicio)
             {
-                rodTo = FINISH;
+                destino = final;
             }
-            if (rodTo > FINISH)
+            if (destino > final)
             {
-                rodTo = START;
+                destino = inicio;
             }
         }
         else
@@ -79,27 +79,27 @@ int main(void)
             // mover disco alternativo
             // determinar cual disco está en la punta de cada varilla
             // establecer un valor predeterminado (varilla vacía) tq sea mayor que el disco más grande
-            int topDisk[3] = {numberOfDisks, numberOfDisks, numberOfDisks};
+            int discoSup[3] = {cantDiscos, cantDiscos, cantDiscos};
             // poner cada disco en su varilla respectiva
             // los discos pequeños sobrescriben discos más grandes
-            for (int i = numberOfDisks - 1; i > -1; --i)
+            for (int i = cantDiscos - 1; i > -1; --i)
             {
-                topDisk[rod[i]] = i;
+                discoSup[varilla[i]] = i;
             }
             // seleccionar las 2 varillas que no tienen al disco más pequeño en el movimiento
-            rodFrom = alternateRodTable[rod[0]][0];
-            rodTo = alternateRodTable[rod[0]][1];
+            origen = tabVarillasAlt[varilla[0]][0];
+            destino = tabVarillasAlt[varilla[0]][1];
             // comprobar cuál de los 2 posibles movimientos de varilla a varilla es valido
-            if (topDisk[rodFrom] > topDisk[rodTo])
+            if (discoSup[origen] > discoSup[destino])
             {
-                swap(&rodFrom, &rodTo);
+                intercambio(&origen, &destino);
             }
-            disk = topDisk[rodFrom];
+            disco = discoSup[origen];
         }
-        rod[disk] = rodTo;
+        varilla[disco] = destino;
 
-        printf("%4d: Disco %2d Varilla %c => %c\n", moveCount, disk + 1, rodFrom + 'A', rodTo + 'A');
-    } while (!isSolved(rod, numberOfDisks));
+        printf("%4d: Disco%2d desde %c hasta %c\n", contMovimientos, disco + 1, origen + 'A', destino + 'A');
+    } while (!solucion(varilla, cantDiscos));
 
     return 0;
 }

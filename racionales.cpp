@@ -38,6 +38,9 @@ Racional multiplicarRacionales(Racional r1, Racional r2)
 
 int main()
 {
+    printf("\n"
+           "Racionales 😾\n"
+           "\n");
     Racional r1 = ingresarRacional();
     Racional r2 = ingresarRacional();
     Racional suma = sumarRacionales(r1, r2);
